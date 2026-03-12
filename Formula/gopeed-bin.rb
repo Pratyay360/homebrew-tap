@@ -53,8 +53,8 @@ class GopeedBin < Formula
     libexec.install Dir["opt/gopeed/*"]
 
     # install icons and desktop files
-    (share/"icons/hicolor/scalable/apps").install "usr/share/icons/hicolor/scalable/apps/gopeed.svg"
-    (share/"applications").install "usr/share/applications/gopeed.desktop"
+    (share/"icons/hicolor/scalable/apps").install "./usr/share/icons/hicolor/scalable/apps/gopeed.svg"
+    (share/"applications").install "./usr/share/applications/gopeed.desktop"
   end
 
   test do
