@@ -15,8 +15,8 @@ class GopeedBin < Formula
 
   # Mapping: depends=(...)
   depends_on "gtk+3"
-  depends_on "libayatana-appindicator"
   depends_on "dbus-glib"
+  depends_on "libayatana-appindicator"
   depends_on "rpm2cpio" => :build
   depends_on "libarchive" => :build # provides cpio
 
