@@ -34,7 +34,7 @@ class GopeedBin < Formula
     EOS
 
     # Mimicking your second 'sed' block for the desktop file
-    desktop_file = "usr/share/applications/gopeed.desktop"
+    desktop_file = "~/.local/share/applications/gopeed.desktop"
     if File.exist?(desktop_file)
       inreplace desktop_file do |s|
         s.insert(3, "GenericName=Gopeed Download Manager\n" \
@@ -53,8 +53,8 @@ class GopeedBin < Formula
     libexec.install Dir["opt/gopeed/*"]
 
     # install icons and desktop files
-    (share/"icons/hicolor/scalable/apps").install "./usr/share/icons/hicolor/scalable/apps/gopeed.svg"
-    (share/"applications").install "./usr/share/applications/gopeed.desktop"
+    (share/"icons/hicolor/scalable/apps").install "~/.local/share/icons/hicolor/scalable/apps/gopeed.svg"
+    (share/"applications").install "~/.local/share/applications/gopeed.desktop"
   end
 
   test do
