@@ -34,16 +34,18 @@ class GopeedBin < Formula
     EOS
 
     # Mimicking your second 'sed' block for the desktop file
-    desktop_file = "~/.local/share/applications/gopeed.desktop"
-    if File.exist?(desktop_file)
-      inreplace desktop_file do |s|
-        s.insert(3, "GenericName=Gopeed Download Manager\n" \
-                    "MimeType=x-scheme-handler/gopeed;x-scheme-handler/magnet;application/x-bittorrent;\n" \
-                    "Categories=Network;Utility;\n" \
-                    "Keywords=Application;DownloadManager;Network;Utility;\n" \
-                    "StartupNotify=False\n")
-      end
-    end
+    desktop_file = File.expand_path("~/.local/share/applications/gopeed.desktop")
+
+if File.exist?(desktop_file)
+  inreplace desktop_file do |s|
+    s.sub!("[Desktop Entry]\n", "[Desktop Entry]\n" \
+      "GenericName=Gopeed Download Manager\n" \
+      "MimeType=x-scheme-handler/gopeed;x-scheme-handler/magnet;application/x-bittorrent;\n" \
+      "Categories=Network;Utility;\n" \
+      "Keywords=Application;DownloadManager;Network;Utility;\n" \
+      "StartupNotify=False\n")
+  end
+end
 
     # --- PACKAGE PHASE ---
     # install -Dm755 gopeed.sh -> /usr/bin/gopeed
