@@ -16,7 +16,7 @@ cask "firefox-linux" do
     regex(%r{href=.*?/linux-x86_64/en-US/firefox-(\d+(?:\.\d+)+)\.tar\.xz}i)
   end
 
-  binary "firefox/bin/firefox"
+  binary "firefox/firefox"
   artifact "firefox/firefox.desktop",
            target: "#{Dir.home}/.local/share/applications/firefox.desktop"
   artifact "firefox/browser/chrome/icons/default/default128.png",

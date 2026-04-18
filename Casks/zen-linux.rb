@@ -17,23 +17,23 @@ cask "zen-linux" do
     end
   end
 
-  binary "zen/zen"
-  artifact "zen/zen.desktop",
+  binary "Zen/zen"
+  artifact "Zen/zen.desktop",
            target: "#{Dir.home}/.local/share/applications/zen.desktop"
-  artifact "zen/browser/chrome/icons/default/default128.png",
+  artifact "Zen/browser/chrome/icons/default/default128.png",
            target: "#{Dir.home}/.local/share/icons/zen.png"
 
   preflight do
     FileUtils.mkdir_p "#{Dir.home}/.local/share/applications"
     FileUtils.mkdir_p "#{Dir.home}/.local/share/icons"
 
-    File.write("#{staged_path}/zen/zen.desktop", <<~EOS)
+    File.write("#{staged_path}/Zen/zen.desktop", <<~EOS)
       [Desktop Entry]
       Name=Zen Browser
       Comment=Experience tranquillity while browsing the web without people tracking you!
       Keywords=web;browser;internet
       Exec=#{HOMEBREW_PREFIX}/bin/zen %u
-      Icon=#{Dir.home}/.local/share/icons/zen.png
+      Icon=#{Dir.home}/.local/share/icons/default128.png
       Terminal=false
       StartupNotify=true
       StartupWMClass=zen
@@ -63,8 +63,6 @@ cask "zen-linux" do
 
   zap trash: [
     "~/.config/zen",
-    "~/.local/share/applications/zen.desktop",
-    "~/.local/share/icons/zen.png",
     "~/.zen",
   ]
 end
