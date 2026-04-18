@@ -33,7 +33,7 @@ cask "zen-linux" do
       Comment=Experience tranquillity while browsing the web without people tracking you!
       Keywords=web;browser;internet
       Exec=#{HOMEBREW_PREFIX}/bin/zen %u
-      Icon=#{Dir.home}/.local/share/icons/default128.png
+      Icon=#{Dir.home}/.local/share/icons/zen.png
       Terminal=false
       StartupNotify=true
       StartupWMClass=zen
