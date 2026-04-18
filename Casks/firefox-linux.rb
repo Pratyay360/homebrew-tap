@@ -28,7 +28,7 @@ cask "firefox-linux" do
       [Desktop Entry]
       Name=Firefox
       Keywords=web,development,code,api,text,editor
-      Exec=#{HOMEBREW_PREFIX}/bin/firefox %u
+      Exec=#{HOMEBREW_PREFIX}/firefox %u
       Icon=#{Dir.home}/.local/share/icons/firefox.png
       Terminal=false
       Type=Application
@@ -38,12 +38,12 @@ cask "firefox-linux" do
 
       [Desktop Action new-empty-window]
       Name=New Empty Window
-      Exec=#{HOMEBREW_PREFIX}/bin/firefox --new-window %F
+      Exec=#{HOMEBREW_PREFIX}/firefox --new-window %F
       Icon=#{Dir.home}/.local/share/icons/firefox.png
 
       [Desktop Action new-private-window]
       Name=New Private Window
-      Exec=#{HOMEBREW_PREFIX}/bin/firefox --private-window %F
+      Exec=#{HOMEBREW_PREFIX}/firefox --private-window %F
       Icon=#{Dir.home}/.local/share/icons/firefox.png
     EOS
   end
