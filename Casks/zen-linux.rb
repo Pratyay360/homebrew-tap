@@ -32,7 +32,7 @@ cask "zen-linux" do
       Name=Zen Browser
       Comment=Experience tranquillity while browsing the web without people tracking you!
       Keywords=web;browser;internet
-      Exec=#{HOMEBREW_PREFIX}/zen %u
+      Exec=#{HOMEBREW_PREFIX}/bin/zen %u
       Icon=#{Dir.home}/.local/share/icons/default128.png
       Terminal=false
       StartupNotify=true
@@ -45,19 +45,19 @@ cask "zen-linux" do
 
       [Desktop Action new-window]
       Name=Open a New Window
-      Exec=#{HOMEBREW_PREFIX}/zen --new-window %u
+      Exec=#{HOMEBREW_PREFIX}/bin/zen --new-window %u
 
       [Desktop Action new-blank-window]
       Name=Open a New Blank Window
-      Exec=#{HOMEBREW_PREFIX}/zen --blank-window %u
+      Exec=#{HOMEBREW_PREFIX}/bin/zen --blank-window %u
 
       [Desktop Action new-private-window]
       Name=Open a New Private Window
-      Exec=#{HOMEBREW_PREFIX}/zen --private-window %u
+      Exec=#{HOMEBREW_PREFIX}/bin/zen --private-window %u
 
       [Desktop Action profile-manager-window]
       Name=Open the Profile Manager
-      Exec=#{HOMEBREW_PREFIX}/zen --ProfileManager
+      Exec=#{HOMEBREW_PREFIX}/bin/zen --ProfileManager
     EOS
   end
 
