@@ -10,7 +10,6 @@ cask "zen-linux" do
   desc "Firefox-based browser focused on productivity and privacy"
   homepage "https://zen-browser.app/"
 
-  auto_updates true
 
   livecheck do
     url "https://api.github.com/repos/zen-browser/desktop/releases/latest"
@@ -18,6 +17,8 @@ cask "zen-linux" do
       json["tag_name"]
     end
   end
+
+  auto_updates true
 
   binary "zen/zen"
   artifact "zen/zen.desktop",

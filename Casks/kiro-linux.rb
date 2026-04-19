@@ -7,14 +7,14 @@ cask "kiro-linux" do
   desc "Amazon kiro ide"
   homepage "https://kiro.dev/"
 
-  auto_updates true
-
   livecheck do
     url "https://prod.download.desktop.kiro.dev/stable/metadata-linux-x64-stable.json"
     strategy :json do |json|
       json["currentRelease"]
     end
   end
+
+  auto_updates true
 
   binary "Kiro/bin/kiro"
   bash_completion "#{staged_path}/Kiro/resources/completions/bash/kiro"

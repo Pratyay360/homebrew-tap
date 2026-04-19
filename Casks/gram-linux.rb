@@ -7,8 +7,6 @@ cask "gram-linux" do
   desc "Code editor for humanoid apes and grumpy toads"
   homepage "https://codeberg.org/GramEditor/gram"
 
-  auto_updates true
-
   # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
     url "https://codeberg.org/api/v1/repos/GramEditor/gram/releases/latest"
@@ -16,6 +14,8 @@ cask "gram-linux" do
       json["tag_name"]
     end
   end
+
+  auto_updates true
 
   binary "gram.app/bin/gram"
   artifact "gram.app/share/applications/gram.desktop",

@@ -10,14 +10,14 @@ cask "kitty-linux" do
   desc "Kitty is a fast, feature-rich, GPU-based terminal emulator"
   homepage "https://github.com/kovidgoyal/kitty"
 
-  auto_updates true
-
   livecheck do
     url "https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
     strategy :json do |json|
       json["tag_name"]
     end
   end
+
+  auto_updates true
 
   binary "bin/kitty"
   binary "bin/kitten"

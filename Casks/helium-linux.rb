@@ -10,7 +10,6 @@ cask "helium-linux" do
   desc "Chromium-based web browser made for people"
   homepage "https://helium.computer/"
 
-  auto_updates true
 
   # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
@@ -19,6 +18,8 @@ cask "helium-linux" do
       json["tag_name"]
     end
   end
+
+  auto_updates true
 
   binary "helium-#{version}-x86_64_linux/helium"
   artifact "helium-#{version}-x86_64_linux/helium.desktop",

@@ -10,13 +10,13 @@ cask "better-bird-linux" do
   desc "Mail client"
   homepage "https://www.betterbird.eu/"
 
-  auto_updates true
 
   livecheck do
     url "https://www.betterbird.eu/downloads/getloc.php?os=linux&lang=en-US&version=release"
     strategy :page_match
     regex(/href=.*?betterbird[._-]v?(\d+(?:\.\d+)+)\.en-US\.linux-x86_64\.tar\.xz/i)
   end
+  auto_updates true
 
   binary "betterbird/betterbird"
   artifact "betterbird/betterbird.desktop",
