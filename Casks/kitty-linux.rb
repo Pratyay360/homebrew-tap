@@ -5,7 +5,7 @@ cask "kitty-linux" do
   version "nightly"
   sha256 "b1d481f8effa10a8cf801099e78773bdb470df88c8b9df8aa53cfca83a9f35ea"
 
-  url "https://github.com/kovidgoyal/kitty/releases/download/nightly/kitty-#{version}-x86_64.txz"
+  url "https://github.com/kovidgoyal/kitty/releases/download/#{version}/kitty-#{version}-x86_64.txz"
   name "kitty-linux"
   desc "Kitty is a fast, feature-rich, GPU-based terminal emulator"
   homepage "https://github.com/kovidgoyal/kitty"
