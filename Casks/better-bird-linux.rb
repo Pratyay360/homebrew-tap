@@ -8,7 +8,7 @@ cask "better-bird-linux" do
   url "https://www.betterbird.eu/downloads/LinuxArchive/betterbird-#{version}.en-US.linux-x86_64.tar.xz"
   name "better-bird-linux"
 
-  desc "mail client"
+  desc "Mail client"
   homepage "https://www.betterbird.eu/"
 
   livecheck do
@@ -40,7 +40,7 @@ cask "better-bird-linux" do
     EOS
   end
   zap trash: [
-    "~/.config/betterbird",
     "~/.betterbird",
+    "~/.config/betterbird"
   ]
 end
