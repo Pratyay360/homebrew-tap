@@ -19,7 +19,7 @@ cask "helium-linux" do
   end
 
   binary "helium-#{version}-x86_64_linux/helium"
-  artifact "helium/share/applications/helium.desktop",
+  artifact "helium-#{version}-x86_64_linux/helium.desktop",
            target: "#{Dir.home}/.local/share/applications/helium.desktop"
   artifact "helium-#{version}-x86_64_linux/product_logo_256.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/helium.png"
