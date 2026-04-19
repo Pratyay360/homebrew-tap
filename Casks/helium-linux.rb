@@ -26,22 +26,22 @@ cask "helium-linux" do
 
   preflight do
     FileUtils.mkdir_p "#{Dir.home}/.local/share/applications"
-    File.write("#{staged_path}/helium.app/share/applications/helium.desktop", <<~EOS)
+    File.write("#{staged_path}/helium-#{version}-x86_64_linux/helium.desktop", <<~EOS)
       [Desktop Entry]
       Name=Helium
       Keywords=web,development,code,api,text,editor
       Exec=#{HOMEBREW_PREFIX}/bin/helium %u
-      Icon=#{staged_path}/helium/helium.png
+      Icon=#{staged_path}/helium-#{version}-x86_64_linux/helium.png
       Terminal=false
       Type=Application
       StartupWMClass=Helium
-      Categories=Api;Code;Development;Text;Edit;Editor;
+      Categories=Internet;chromium;browser;
       Actions=new-empty-window;
 
       [Desktop Action new-empty-window]
       Name=New Empty Window
       Exec=#{HOMEBREW_PREFIX}/bin/helium --new-window %F
-      Icon=#{staged_path}/helium/helium.png
+      Icon=#{staged_path}/helium-#{version}-x86_64_linux/helium.png
     EOS
   end
 
