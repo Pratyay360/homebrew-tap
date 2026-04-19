@@ -39,8 +39,9 @@ cask "better-bird-linux" do
 
     EOS
   end
+
   zap trash: [
     "~/.betterbird",
-    "~/.config/betterbird"
+    "~/.config/betterbird",
   ]
 end
