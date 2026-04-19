@@ -1,0 +1,65 @@
+name: Brew Livecheck & Update (Docker)
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+  
+
+jobs:
+  livecheck:
+    runs-on: ubuntu-latest
+
+    container:
+      image: homebrew/brew:latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+      - name: Tap repo
+        run: |
+          brew tap $GITHUB_REPOSITORY
+
+      - name: Install jq
+        run: |
+          brew install jq
+
+      - name: Run livecheck
+        run: |
+          brew livecheck --tap=$GITHUB_REPOSITORY --json > livecheck.json
+          cat livecheck.json
+
+      - name: Update outdated formulae
+        run: |
+          outdated=$(jq -r '.[] | select(.version.latest != .version.current) | .formula' livecheck.json)
+
+          if [ -z "$outdated" ]; then
+            echo "No updates found."
+            exit 0
+          fi
+
+          for formula in $outdated; do
+            echo "Updating $formula"
+            brew bump-formula-pr \
+              --no-browse \
+              --no-audit \
+              --no-fork \
+              --message="Auto-update $formula" \
+              "$formula" || true
+          done
+
+      - name: Commit & push changes
+        run: |
+          git add .
+          git diff --cached --quiet || git commit -m "chore: update brew formulas"
+          git push
