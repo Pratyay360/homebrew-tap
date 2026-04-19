@@ -7,8 +7,8 @@ cask "helium-linux" do
 
   url "https://github.com/imputnet/helium-linux/releases/download/#{version}/helium-#{version}-x86_64_linux.tar.xz"
   name "helium-linux"
-  desc "The Chromium-based web browser made for people"
-  homepage "https://helium.computer"
+  desc "Chromium-based web browser made for people"
+  homepage "https://helium.computer/"
 
   # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
@@ -21,7 +21,7 @@ cask "helium-linux" do
   binary "helium-#{version}-x86_64_linux/helium"
   artifact "helium/share/applications/helium.desktop",
            target: "#{Dir.home}/.local/share/applications/helium.desktop"
-  artifact "helium/product_logo_256.png",
+  artifact "helium-#{version}-x86_64_linux/product_logo_256.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/helium.png"
 
   preflight do
