@@ -16,7 +16,7 @@ jobs:
       - name: Install Homebrew
         run: |
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          printf '%s\n' 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
+          printf '%s\n' "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> "$HOME/.bashrc"
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew update
 
