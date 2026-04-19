@@ -10,7 +10,8 @@ cask "kitty-linux" do
   desc "Kitty is a fast, feature-rich, GPU-based terminal emulator"
   homepage "https://github.com/kovidgoyal/kitty"
 
-  # Documentation: https://docs.brew.sh/Brew-Livecheck
+  auto_updates true
+
   livecheck do
     url "https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
     strategy :json do |json|

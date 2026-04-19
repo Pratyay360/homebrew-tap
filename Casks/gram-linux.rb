@@ -7,6 +7,8 @@ cask "gram-linux" do
   desc "Code editor for humanoid apes and grumpy toads"
   homepage "https://codeberg.org/GramEditor/gram"
 
+  auto_updates true
+
   # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
     url "https://codeberg.org/api/v1/repos/GramEditor/gram/releases/latest"

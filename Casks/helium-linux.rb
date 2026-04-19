@@ -10,6 +10,8 @@ cask "helium-linux" do
   desc "Chromium-based web browser made for people"
   homepage "https://helium.computer/"
 
+  auto_updates true
+
   # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
     url "https://api.github.com/repos/imputnet/helium-linux/releases/latest"
