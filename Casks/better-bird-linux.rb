@@ -7,11 +7,12 @@ cask "better-bird-linux" do
 
   url "https://www.betterbird.eu/downloads/LinuxArchive/betterbird-#{version}.en-US.linux-x86_64.tar.xz"
   name "better-bird-linux"
-  desc "mail client firefox"
+
+  desc "mail client"
   homepage "https://www.betterbird.eu/"
 
   livecheck do
-    url "https://www.betterbird.eu/downloads/getloc.php?os=linux&lang=en-US&version=release/"
+    url "https://www.betterbird.eu/downloads/getloc.php?os=linux&lang=en-US&version=release"
     strategy :page_match
     regex(/href=.*?betterbird[._-]v?(\d+(?:\.\d+)+)\.en-US\.linux-x86_64\.tar\.xz/i)
   end
@@ -39,7 +40,7 @@ cask "better-bird-linux" do
     EOS
   end
   zap trash: [
-    "~/.config/firefox",
-    "~/.mozilla",
+    "~/.config/betterbird",
+    "~/.betterbird",
   ]
 end
