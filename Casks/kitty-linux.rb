@@ -7,7 +7,7 @@ cask "kitty-linux" do
 
   url "https://github.com/kovidgoyal/kitty/releases/download/nightly/kitty-nightly-x86_64.txz"
   name "kitty-linux"
-  desc "Kitty is a fast, feature-rich, GPU-based terminal emulator."
+  desc "Kitty is a fast, feature-rich, GPU-based terminal emulator"
   homepage "https://github.com/kovidgoyal/kitty"
 
   # Documentation: https://docs.brew.sh/Brew-Livecheck
