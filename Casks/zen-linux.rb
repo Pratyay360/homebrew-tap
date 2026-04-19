@@ -10,7 +10,6 @@ cask "zen-linux" do
   desc "Firefox-based browser focused on productivity and privacy"
   homepage "https://zen-browser.app/"
 
-
   livecheck do
     url "https://api.github.com/repos/zen-browser/desktop/releases/latest"
     strategy :json do |json|

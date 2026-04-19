@@ -16,6 +16,7 @@ cask "better-bird-linux" do
     strategy :page_match
     regex(/href=.*?betterbird[._-]v?(\d+(?:\.\d+)+)\.en-US\.linux-x86_64\.tar\.xz/i)
   end
+  
   auto_updates true
 
   binary "betterbird/betterbird"
