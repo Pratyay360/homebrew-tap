@@ -1,42 +1,44 @@
-name: Brew Livecheck & Update (Docker)
+name: Brew Livecheck & Update (Linux)
 
 on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
 
-permissions:
-  actions: write
-  contents: write
-  
-
 jobs:
   livecheck:
     runs-on: ubuntu-latest
-
-    container:
-      image: homebrew/brew:latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up git
+      - name: Install Homebrew (Linuxbrew)
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          NONINTERACTIVE=1 /bin/bash -c \
+            "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Tap repo
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+          brew update
+
+      - name: Add brew to PATH
         run: |
-          brew tap $GITHUB_REPOSITORY
+          echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+
+      - name: Tap your repo
+        run: |
+          brew tap ${{ github.repository }}
 
       - name: Install jq
         run: |
           brew install jq
 
-      - name: Run livecheck
+      - name: Run brew livecheck
         run: |
-          brew livecheck --tap=$GITHUB_REPOSITORY --json > livecheck.json
+          brew livecheck --tap=${{ github.repository }} --json > livecheck.json
           cat livecheck.json
 
       - name: Update outdated formulae
@@ -55,11 +57,14 @@ jobs:
               --no-audit \
               --no-fork \
               --message="Auto-update $formula" \
-              "$formula" || true
+              $formula || true
           done
 
-      - name: Commit & push changes
+      - name: Commit changes
         run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
           git add .
           git diff --cached --quiet || git commit -m "chore: update brew formulas"
           git push
