@@ -18,14 +18,12 @@ cask "kitty-linux" do
     end
   end
 
-
   binary "kitty/bin/kitty"
   binary "kitty/bin/kitten"
   artifact "kitty/share/applications/kitty.desktop",
            target: "#{Dir.home}/.local/share/applications/kitty.desktop"
   artifact "kitty/share/icons/hicolor/scalable/apps/kitty.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/kitty.svg"
-
 
   # Documentation: https://docs.brew.sh/Cask-Cookbook#stanza-zap
   zap trash: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/kitty.svg"
