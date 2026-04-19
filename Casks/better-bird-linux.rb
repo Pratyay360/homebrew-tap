@@ -7,7 +7,6 @@ cask "better-bird-linux" do
 
   url "https://www.betterbird.eu/downloads/LinuxArchive/betterbird-#{version}.en-US.linux-x86_64.tar.xz"
   name "better-bird-linux"
-
   desc "Mail client"
   homepage "https://www.betterbird.eu/"
 
