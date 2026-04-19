@@ -22,7 +22,7 @@ cask "kitty-linux" do
   binary "bin/kitten"
   artifact "share/applications/kitty.desktop",
            target: "#{Dir.home}/.local/share/applications/kitty.desktop"
-  artifact "share/icons/hicolor/scalable/apps/kitty.png",
+  artifact "share/icons/hicolor/scalable/apps/kitty.svg",
            target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/kitty.svg"
 
   # Documentation: https://docs.brew.sh/Cask-Cookbook#stanza-zap
