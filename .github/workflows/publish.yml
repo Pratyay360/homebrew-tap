@@ -27,19 +27,16 @@ jobs:
           echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
           brew update
 
-      - name: Tap custom repo
-        run: brew tap ${{ github.repository_owner }}/tap
-
       - name: Get latest version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          brew tap ${{ github.repository_owner }}/tap
           casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
           for cas in $casks; do
-            cask=$(echo $cas | tr -d \"\')
+            cask=$(echo $cas | tr -d \"\)
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" = "true" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
