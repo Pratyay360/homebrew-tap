@@ -40,9 +40,8 @@ jobs:
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
+              git commit -a -m "Update casks" && git push
             fi
           done
-          git commit -a -m "Update casks"
-          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
