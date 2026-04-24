@@ -19,25 +19,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Install Homebrew (Linuxbrew)
+      - name: Install jq
+        run: sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: Set up Homebrew (no sudo)
+        env:
+          HOMEBREW_NO_ENV_HINTS: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+          HOMEBREW_NO_ANALYTICS: "1"
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_SUDO_ACCESS: "0"
         run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
-          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          set -euxo pipefail
+          brew --version
           brew update
 
       - name: Tap custom repo
-        run: brew tap ${{ github.repository_owner }}/tap
+        run: brew tap ${{ github.repository_owner }}/homebrew-tap
 
       - name: Get latest version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_NO_ENV_HINTS: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+          HOMEBREW_NO_ANALYTICS: "1"
+          HOMEBREW_SUDO_ACCESS: "0"
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-          casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
+          casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/homebrew-tap") | jq '.[].cask')
           for cas in $casks; do
             cask=$(echo $cas | tr -d \"\')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
