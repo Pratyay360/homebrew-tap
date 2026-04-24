@@ -30,7 +30,7 @@ jobs:
           HOMEBREW_NO_AUTO_UPDATE: "1"
           HOMEBREW_SUDO_ACCESS: "0"
         run: |
-          set -euxo pipefail
+          set -euo pipefail
           brew --version
           brew update
 
@@ -50,7 +50,7 @@ jobs:
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/homebrew-tap") | jq '.[].cask')
           for cas in $casks; do
-            cask=$(echo $cas | tr -d \"\')
+            cask=$(echo "$cas" | tr -d \"\')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" = "true" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
