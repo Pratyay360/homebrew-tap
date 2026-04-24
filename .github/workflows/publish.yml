@@ -36,7 +36,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
           for cas in $casks; do
-            cask=$(echo $cas)
+            cask=$(echo $cas | tr -d \"\')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
