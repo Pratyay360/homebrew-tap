@@ -1,5 +1,5 @@
 cask "kiro-linux" do
-  version "0.11.132"
+  version "0.11.133"
   sha256 :no_check
 
   url "https://prod.download.desktop.kiro.dev/releases/stable/linux-x64/signed/#{version}/tar/kiro-ide-#{version}-stable-linux-x64.tar.gz"
