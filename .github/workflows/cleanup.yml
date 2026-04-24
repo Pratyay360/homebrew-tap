@@ -1,0 +1,24 @@
+name: Cleanup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+      - name: Delete old releases
+        uses: actions/checkout@v6
+      - name: cleanup
+        run: |
+          echo "Cleaning up old releases..."
+          git tag -l | xargs git tag -d
+          git push --tags --force
+          gh run list --limit 1000 --json databaseId -q '.[].databaseId' | \
+          xargs -I {} gh run delete {}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

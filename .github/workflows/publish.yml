@@ -1,0 +1,48 @@
+name: check update
+
+on:
+  schedule:
+    - cron: "0 2 */2 * *"
+  workflow_dispatch:
+  pull_request:
+  push:
+
+permissions:
+  contents: write
+  actions: write
+  pull-requests: write
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Homebrew (Linuxbrew)
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> "$GITHUB_PATH"
+          brew update
+
+      - name: Tap custom repo
+        run: brew tap ${{ github.repository_owner }}/tap
+
+      - name: Get latest version
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
+          for cask in $casks; do
+            should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
+            if [ "$should_bump" ]; then
+              cask=${cask//[\"\']/}
+              brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
+            fi
+          done
+          git commit -a -m "Update casks"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
