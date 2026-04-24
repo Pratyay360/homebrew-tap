@@ -31,17 +31,18 @@ jobs:
         run: brew tap ${{ github.repository_owner }}/tap
 
       - name: Get latest version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
           for cas in $casks; do
             cask=$(echo $cas | tr -d \"\')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
-              git commit -a -m "Update casks" && git push
             fi
           done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git add . && git commit -m "Update casks" && git push
