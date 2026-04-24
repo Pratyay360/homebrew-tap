@@ -43,7 +43,6 @@ jobs:
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
-              git add . && git commit -m "Update casks"
             fi
           done
           git add . && git commit -m "Update casks" && git push
