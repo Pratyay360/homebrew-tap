@@ -33,7 +33,7 @@ jobs:
           brew tap ${{ github.repository_owner }}/tap
           casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
           for cas in $casks; do
-            cask=$(echo $cas | tr -d \"\)
+            cask=$(echo "$cas" | tr -d '"')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" = "true" ]; then
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
