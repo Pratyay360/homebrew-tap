@@ -31,14 +31,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           brew tap ${{ github.repository_owner }}/tap
-          casks=$(brew livecheck --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')
+          casks="$(brew livecheck --eval-all --json $(brew search "${{ github.repository_owner }}/tap") | jq '.[].cask')"
           for cas in $casks; do
-            cask=${cas//\"/}
+            cask=$(echo "$cas" | tr -d '"')
             should_bump="$(brew livecheck --json $cask | jq -r '.[].version.outdated')"
             if [ "$should_bump" = "true" ]; then
+              echo "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
               brew bump-cask-pr --commit --write-only $cask --version "$(brew livecheck --json $cask | jq -r '.[].version.latest')"
+              echo "Bumping $cask"
+            else
+              echo "Skipping $cask"
             fi
-          done
-          if [ -n "$(git status --porcelain)" ]; then
             git add . && git commit -m "Update casks" && git push
-          fi
+          done
