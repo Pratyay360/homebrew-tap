@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -34,8 +34,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           brew tap "${{ github.repository_owner }}/tap"
-
-          # Get cask names from the tap
+          brew trust "${{ github.repository_owner }}/tap"
+          
           mapfile -t casks < <(brew search "${{ github.repository_owner }}/tap/" | \
             grep "^${{ github.repository_owner }}/tap/" | \
             sed "s|^${{ github.repository_owner }}/tap/||")
