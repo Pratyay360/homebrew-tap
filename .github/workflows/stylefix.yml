@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
 
-      - name: Install Homebrew (Linuxbrew)
+      - name: Install Homebrew 
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -23,17 +23,17 @@ jobs:
           brew update
 
       - name: Tap custom repo
-        run: brew tap ${{ github.repository_owner }}/tap
+        run: brew tap ${{ github.repository_owner }}/tap && brew trust "${{ github.repository_owner }}/tap"
 
       - name: Fix style issues
         run: brew style --fix .
 
       - name: Commit and push
         run: |
-          git config --global user.name "github-actions[bot]"
+          git config --global user.name "github-actions"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore: FIX style issues"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
