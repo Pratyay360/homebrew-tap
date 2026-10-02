@@ -1,1 +1,6 @@
-.github/workflows/update.yml
+# Jujutsu colocated-repo metadata (local only; never belongs in the tap).
+.jj/
+
+# Superseded by publish.yml ("Update casks"), which now runs on a schedule.
+# Kept only in case an older branch is checked out.
+# .github/workflows/update.yml

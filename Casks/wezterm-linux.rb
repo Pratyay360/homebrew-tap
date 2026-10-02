@@ -2,10 +2,10 @@
 #                https://docs.brew.sh/Adding-Software-to-Homebrew#cask-stanzas
 # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 cask "wezterm-linux" do
-  version "20240203-110809"
+  version "20240203-110809-5046fc22"
   sha256 :no_check
 
-  url "https://github.com/wezterm/wezterm/releases/download/#{version}-5046fc22/WezTerm-#{version}-5046fc22-Ubuntu20.04.AppImage"
+  url "https://github.com/wezterm/wezterm/releases/download/#{version}/WezTerm-#{version}-Ubuntu20.04.AppImage"
   name "wezterm-linux"
   desc "WezTerm Terminal for Linux"
   homepage "https://wezterm.org/"
@@ -18,7 +18,7 @@ cask "wezterm-linux" do
     end
   end
 
-  binary "WezTerm-#{version}-5046fc22-Ubuntu20.04.AppImage", target: "wezterm"
+  binary "WezTerm-#{version}-Ubuntu20.04.AppImage", target: "wezterm"
   artifact "wezterm.desktop", target: "#{Dir.home}/.local/share/applications/wezterm.desktop"
   artifact "org.wezfurlong.wezterm.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/org.wezfurlong.wezterm.png"
@@ -27,7 +27,7 @@ cask "wezterm-linux" do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
     # Make AppImage executable
-    appimage_name = "WezTerm-#{version}-5046fc22-Ubuntu20.04.AppImage"
+    appimage_name = "WezTerm-#{version}-Ubuntu20.04.AppImage"
     FileUtils.chmod("+x", "#{staged_path}/#{appimage_name}")
     system("#{staged_path}/#{appimage_name}", "--appimage-extract", chdir: staged_path)
     icon_source = "#{staged_path}/squashfs-root/org.wezfurlong.wezterm.png"

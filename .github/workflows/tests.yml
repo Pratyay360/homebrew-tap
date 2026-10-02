@@ -22,21 +22,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Homebrew Bundler RubyGems
-        uses: actions/cache@main
+        uses: actions/cache@v6
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ runner.os }}-rubygems-
 
+      # This tap ships casks only, so --only-tap-syntax is the check that applies.
+      # There are no formulae here, and bottles are formula-only packaging, so there is
+      # no bottle build step and nothing to upload as an artifact.
       - run: |
           brew test-bot --only-cleanup-before
           brew test-bot --only-setup
           brew test-bot --only-tap-syntax
-          brew test-bot --only-formulae
-
-      - name: Upload bottles as artifact
-        if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@main
-        with:
-          name: bottles_${{ runner.os }}
-          path: "*.bottle.*"

@@ -14,7 +14,7 @@ cask "ghostty-linux" do
   livecheck do
     url "https://api.github.com/repos/pkgforge-dev/ghostty-appimage/releases/latest"
     strategy :json do |json|
-      json["tag_name"]
+      json["tag_name"].delete_prefix("v")
     end
   end
 

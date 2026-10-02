@@ -11,9 +11,12 @@ cask "kitty-linux" do
   homepage "https://github.com/kovidgoyal/kitty"
 
   livecheck do
-    url "https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
+    # This cask tracks the rolling "nightly" release, so livecheck must report the
+    # nightly tag. Pointing at /releases/latest would report a stable tag (e.g. v0.49.2)
+    # and automated bumps would rewrite version to it, breaking the download URL.
+    url "https://api.github.com/repos/kovidgoyal/kitty/releases/tags/nightly"
     strategy :json do |json|
-      json["tag_name"]
+      json["tag_name"].delete_prefix("v")
     end
   end
 

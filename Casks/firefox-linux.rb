@@ -11,9 +11,10 @@ cask "firefox-linux" do
   homepage "https://www.mozilla.org/firefox/"
 
   livecheck do
-    url "https://download-installer.cdn.mozilla.net/pub/firefox/releases/latest/"
-    strategy :page_match
-    regex(%r{href=.*?/linux-x86_64/en-US/firefox-(\d+(?:\.\d+)+)\.tar\.xz}i)
+    url "https://product-details.mozilla.org/1.0/firefox_versions.json"
+    strategy :json do |json|
+      json["LATEST_FIREFOX_VERSION"]
+    end
   end
 
   auto_updates true

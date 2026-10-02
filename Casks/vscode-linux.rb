@@ -10,7 +10,7 @@ cask "vscode-linux" do
   homepage "https://code.visualstudio.com/"
 
   livecheck do
-    url "https://update.code.visualstudio.com/api/update/#{os}-#{arch}/stable/latest"
+    url "https://update.code.visualstudio.com/api/update/linux-#{arch}/stable/latest"
     strategy :json do |json|
       json["productVersion"]
     end
