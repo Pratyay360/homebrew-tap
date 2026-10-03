@@ -23,7 +23,7 @@ cask "wezterm-linux" do
   artifact "org.wezfurlong.wezterm.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/org.wezfurlong.wezterm.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
     # Make AppImage executable

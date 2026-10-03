@@ -22,7 +22,7 @@ cask "helium-linux" do
   artifact "helium-#{version}-x86_64_linux/helium.desktop", target: "#{Dir.home}/.local/share/applications/helium.desktop"
   artifact "helium-#{version}-x86_64_linux/product_logo_256.png", target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/helium.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/helium-#{version}-x86_64_linux/helium.desktop",

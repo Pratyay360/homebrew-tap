@@ -27,7 +27,7 @@ cask "vscode-linux" do
   artifact "VSCode-linux-#{arch}/resources/app/resources/linux/code.png",
            target: "#{Dir.home}/.local/share/icons/vscode.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/VSCode-linux-#{arch}/code.desktop",

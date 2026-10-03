@@ -25,7 +25,7 @@ cask "firefox-linux" do
   artifact "firefox/browser/chrome/icons/default/default128.png",
            target: "#{Dir.home}/.local/share/icons/firefox.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/firefox/firefox.desktop",

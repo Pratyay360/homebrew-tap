@@ -28,7 +28,7 @@ cask "better-bird-linux" do
     target: "#{Dir.home}/.local/share/icons/betterbird.png",
   )
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/betterbird/betterbird.desktop",

@@ -21,7 +21,7 @@ cask "gram-linux" do
   artifact "gram.app/share/applications/gram.desktop",
            target: "#{Dir.home}/.local/share/applications/app.liten.Gram.desktop"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/gram.app/share/applications/gram.desktop",

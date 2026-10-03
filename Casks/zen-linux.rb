@@ -24,7 +24,7 @@ cask "zen-linux" do
   artifact "zen/browser/chrome/icons/default/default128.png",
            target: "#{Dir.home}/.local/share/icons/zen.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     FileUtils.mkdir_p("#{Dir.home}/.local/share/icons")
 

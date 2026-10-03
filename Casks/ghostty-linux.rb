@@ -24,7 +24,7 @@ cask "ghostty-linux" do
   artifact "com.mitchellh.ghostty.png",
            target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/com.mitchellh.ghostty.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
 

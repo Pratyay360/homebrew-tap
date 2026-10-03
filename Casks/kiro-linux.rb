@@ -22,7 +22,7 @@ cask "kiro-linux" do
   artifact "Kiro/kiro.desktop", target: "#{Dir.home}/.local/share/applications/kiro.desktop"
   artifact "Kiro/resources/app/resources/linux/code.png", target: "#{Dir.home}/.local/share/icons/kiro.png"
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     File.write(
       "#{staged_path}/Kiro/kiro.desktop",

@@ -34,7 +34,7 @@ cask "cursor-linux" do
     target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/cursor.png",
   )
 
-  preflight do
+  preflight_steps do
     FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
     FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
 
