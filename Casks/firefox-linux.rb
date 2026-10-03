@@ -26,9 +26,9 @@ cask "firefox-linux" do
            target: "#{Dir.home}/.local/share/icons/firefox.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/firefox/firefox.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "firefox/firefox.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Firefox

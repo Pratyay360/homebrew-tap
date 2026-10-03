@@ -17,15 +17,15 @@ cask "kiro-linux" do
   auto_updates true
 
   binary "Kiro/bin/kiro"
-  bash_completion "#{staged_path}/Kiro/resources/completions/bash/kiro"
-  zsh_completion "#{staged_path}/Kiro/resources/completions/zsh/_kiro"
+  bash_completion "Kiro/resources/completions/bash/kiro"
+  zsh_completion "Kiro/resources/completions/zsh/_kiro"
   artifact "Kiro/kiro.desktop", target: "#{Dir.home}/.local/share/applications/kiro.desktop"
   artifact "Kiro/resources/app/resources/linux/code.png", target: "#{Dir.home}/.local/share/icons/kiro.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/Kiro/kiro.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "Kiro/kiro.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Kiro

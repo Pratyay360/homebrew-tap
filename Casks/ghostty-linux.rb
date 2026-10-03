@@ -25,16 +25,17 @@ cask "ghostty-linux" do
            target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/com.mitchellh.ghostty.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
+    mkdir_p ".local/share/applications", base: :home
+    mkdir_p ".local/share/icons/hicolor/512x512/apps", base: :home
 
-    appimage_name = "Ghostty-#{version}-x86_64.AppImage"
-    FileUtils.chmod("+x", "#{staged_path}/#{appimage_name}")
-    system("#{staged_path}/#{appimage_name}", "--appimage-extract", chdir: staged_path)
-    icon_source = "#{staged_path}/squashfs-root/com.mitchellh.ghostty.png"
-    FileUtils.cp(icon_source, "#{staged_path}/com.mitchellh.ghostty.png") if File.exist?(icon_source)
-    File.write(
-      "#{staged_path}/com.mitchellh.ghostty.desktop",
+    set_permissions "Ghostty-#{version}-x86_64.AppImage", "+x", recursive: false
+    run "Ghostty-#{version}-x86_64.AppImage", base: :staged_path,
+        args: ["--appimage-extract"], chdir: ".", writable_paths: ["."]
+    if_path_exists "squashfs-root/com.mitchellh.ghostty.png" do
+      copy "squashfs-root/com.mitchellh.ghostty.png", "com.mitchellh.ghostty.png"
+    end
+    write_file(
+      "com.mitchellh.ghostty.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Ghostty
@@ -55,8 +56,8 @@ cask "ghostty-linux" do
       EOS
     )
     # Create a placeholder icon if extraction fails
-    unless File.exist?("#{staged_path}/com.mitchellh.ghostty.png")
-      FileUtils.touch("#{staged_path}/com.mitchellh.ghostty.png")
+    unless_path_exists "com.mitchellh.ghostty.png" do
+      touch "com.mitchellh.ghostty.png"
     end
   end
 

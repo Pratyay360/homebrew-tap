@@ -5,8 +5,7 @@ cask "cursor-linux" do
   version "3.1.17,fce1e9ab7844f9ea35793da01e634aa7e50bce90"
   sha256 :no_check
 
-  url "https://downloads.cursor.com/production/#{version.csv.second}/linux/#{arch}/Cursor-#{version.csv.first}-#{file_arch}.AppImage",
-      verified: "downloads.cursor.com/"
+  url "https://downloads.cursor.com/production/#{version.csv.second}/linux/#{arch}/Cursor-#{version.csv.first}-#{file_arch}.AppImage"
   name "Cursor"
   desc "Write, edit, and chat about your code with AI"
   homepage "https://www.cursor.com/"
@@ -22,9 +21,12 @@ cask "cursor-linux" do
     end
   end
 
-  binary("Cursor-#{version.csv.first}-#{file_arch}.AppImage", target: "cursor")
-  bash_completion("#{staged_path}/squashfs-root/usr/share/cursor/resources/completions/bash/cursor")
-  zsh_completion("#{staged_path}/squashfs-root/usr/share/cursor/resources/completions/zsh/_cursor")
+  # Install steps cannot expand version.csv, so use a stable staged filename.
+  rename "Cursor-#{version.csv.first}-#{file_arch}.AppImage", "Cursor.AppImage"
+
+  binary "Cursor.AppImage", target: "cursor"
+  bash_completion "squashfs-root/usr/share/cursor/resources/completions/bash/cursor"
+  zsh_completion "squashfs-root/usr/share/cursor/resources/completions/zsh/_cursor"
   artifact(
     "cursor.desktop",
     target: "#{Dir.home}/.local/share/applications/cursor.desktop",
@@ -35,20 +37,19 @@ cask "cursor-linux" do
   )
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
+    mkdir_p ".local/share/applications", base: :home
+    mkdir_p ".local/share/icons/hicolor/512x512/apps", base: :home
 
-    # Make AppImage executable
-    appimage_name = "Cursor-#{version.csv.first}-#{file_arch}.AppImage"
-    FileUtils.chmod("+x", "#{staged_path}/#{appimage_name}")
+    set_permissions "Cursor.AppImage", "+x", recursive: false
+    run "Cursor.AppImage", base: :staged_path,
+        args: ["--appimage-extract"], chdir: ".", writable_paths: ["."]
 
-    system("#{staged_path}/#{appimage_name}", "--appimage-extract", chdir: staged_path)
+    if_path_exists "squashfs-root/usr/share/icons/hicolor/512x512/apps/cursor.png" do
+      copy "squashfs-root/usr/share/icons/hicolor/512x512/apps/cursor.png", "cursor.png"
+    end
 
-    icon_source = "#{staged_path}/squashfs-root/usr/share/icons/hicolor/512x512/apps/cursor.png"
-    FileUtils.cp(icon_source, "#{staged_path}/cursor.png") if File.exist?(icon_source)
-
-    File.write(
-      "#{staged_path}/cursor.desktop",
+    write_file(
+      "cursor.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Cursor
@@ -71,7 +72,9 @@ cask "cursor-linux" do
       EOS
     )
 
-    FileUtils.touch("#{staged_path}/cursor.png") unless File.exist?("#{staged_path}/cursor.png")
+    unless_path_exists "cursor.png" do
+          touch "cursor.png"
+        end
   end
 
   zap(

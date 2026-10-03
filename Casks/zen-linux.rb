@@ -25,11 +25,11 @@ cask "zen-linux" do
            target: "#{Dir.home}/.local/share/icons/zen.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/icons")
+    mkdir_p ".local/share/applications", base: :home
+    mkdir_p ".local/share/icons", base: :home
 
-    File.write(
-      "#{staged_path}/zen/zen.desktop",
+    write_file(
+      "zen/zen.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Zen Browser

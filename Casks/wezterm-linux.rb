@@ -24,16 +24,16 @@ cask "wezterm-linux" do
            target: "#{Dir.home}/.local/share/icons/hicolor/512x512/apps/org.wezfurlong.wezterm.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/icons/hicolor/512x512/apps")
-    # Make AppImage executable
-    appimage_name = "WezTerm-#{version}-Ubuntu20.04.AppImage"
-    FileUtils.chmod("+x", "#{staged_path}/#{appimage_name}")
-    system("#{staged_path}/#{appimage_name}", "--appimage-extract", chdir: staged_path)
-    icon_source = "#{staged_path}/squashfs-root/org.wezfurlong.wezterm.png"
-    FileUtils.cp(icon_source, "#{staged_path}/org.wezfurlong.wezterm.png") if File.exist?(icon_source)
-    File.write(
-      "#{staged_path}/wezterm.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    mkdir_p ".local/share/icons/hicolor/512x512/apps", base: :home
+    set_permissions "WezTerm-#{version}-Ubuntu20.04.AppImage", "+x", recursive: false
+    run "WezTerm-#{version}-Ubuntu20.04.AppImage", base: :staged_path,
+        args: ["--appimage-extract"], chdir: ".", writable_paths: ["."]
+    if_path_exists "squashfs-root/org.wezfurlong.wezterm.png" do
+      copy "squashfs-root/org.wezfurlong.wezterm.png", "org.wezfurlong.wezterm.png"
+    end
+    write_file(
+      "wezterm.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=WezTerm
@@ -55,8 +55,8 @@ cask "wezterm-linux" do
       EOS
     )
     # Create a placeholder icon if extraction fails
-    unless File.exist?("#{staged_path}/org.wezfurlong.wezterm.png")
-      FileUtils.touch("#{staged_path}/org.wezfurlong.wezterm.png")
+    unless_path_exists "org.wezfurlong.wezterm.png" do
+      touch "org.wezfurlong.wezterm.png"
     end
   end
 

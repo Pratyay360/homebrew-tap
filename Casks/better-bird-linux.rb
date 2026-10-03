@@ -29,9 +29,9 @@ cask "better-bird-linux" do
   )
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/betterbird/betterbird.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "betterbird/betterbird.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=BetterBird

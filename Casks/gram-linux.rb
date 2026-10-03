@@ -6,8 +6,6 @@ cask "gram-linux" do
   name "Gram"
   desc "Code editor for humanoid apes and grumpy toads"
   homepage "https://codeberg.org/GramEditor/gram"
-
-  # Documentation: https://docs.brew.sh/Brew-Livecheck
   livecheck do
     url "https://codeberg.org/api/v1/repos/GramEditor/gram/releases/latest"
     strategy :json do |json|
@@ -22,15 +20,15 @@ cask "gram-linux" do
            target: "#{Dir.home}/.local/share/applications/app.liten.Gram.desktop"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/gram.app/share/applications/gram.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "gram.app/share/applications/gram.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Gram
         Keywords=web,development,code,api,text,editor
         Exec=#{HOMEBREW_PREFIX}/bin/gram %u
-        Icon=#{staged_path}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
+        Icon={{staged_path}}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
         Terminal=false
         Type=Application
         StartupWMClass=Gram
@@ -40,7 +38,7 @@ cask "gram-linux" do
         [Desktop Action new-empty-window]
         Name=New Empty Window
         Exec=#{HOMEBREW_PREFIX}/bin/gram --new-window %F
-        Icon=#{staged_path}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
+        Icon={{staged_path}}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
       EOS
     )
   end

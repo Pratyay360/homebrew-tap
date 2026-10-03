@@ -18,8 +18,8 @@ cask "vscode-linux" do
 
   binary "VSCode-linux-#{arch}/bin/code"
   binary "VSCode-linux-#{arch}/bin/code-tunnel"
-  bash_completion "#{staged_path}/VSCode-linux-#{arch}/resources/completions/bash/code"
-  zsh_completion "#{staged_path}/VSCode-linux-#{arch}/resources/completions/zsh/_code"
+  bash_completion "VSCode-linux-#{arch}/resources/completions/bash/code"
+  zsh_completion "VSCode-linux-#{arch}/resources/completions/zsh/_code"
   artifact "VSCode-linux-#{arch}/code.desktop",
            target: "#{Dir.home}/.local/share/applications/code.desktop"
   artifact "VSCode-linux-#{arch}/code-url-handler.desktop",
@@ -28,9 +28,9 @@ cask "vscode-linux" do
            target: "#{Dir.home}/.local/share/icons/vscode.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/VSCode-linux-#{arch}/code.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "VSCode-linux-#{arch}/code.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Visual Studio Code
@@ -62,8 +62,8 @@ cask "vscode-linux" do
         Icon=#{Dir.home}/.local/share/icons/vscode.png
       EOS
     )
-    File.write(
-      "#{staged_path}/VSCode-linux-#{arch}/code-url-handler.desktop",
+    write_file(
+      "VSCode-linux-#{arch}/code-url-handler.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Visual Studio Code - URL Handler

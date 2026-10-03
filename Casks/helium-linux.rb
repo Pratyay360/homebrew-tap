@@ -23,15 +23,15 @@ cask "helium-linux" do
   artifact "helium-#{version}-x86_64_linux/product_logo_256.png", target: "#{Dir.home}/.local/share/icons/hicolor/scalable/apps/helium.png"
 
   preflight_steps do
-    FileUtils.mkdir_p("#{Dir.home}/.local/share/applications")
-    File.write(
-      "#{staged_path}/helium-#{version}-x86_64_linux/helium.desktop",
+    mkdir_p ".local/share/applications", base: :home
+    write_file(
+      "helium-#{version}-x86_64_linux/helium.desktop",
       <<~EOS,
         [Desktop Entry]
         Name=Helium
         Keywords=web,development,code,api,text,editor
         Exec=#{HOMEBREW_PREFIX}/bin/helium %u
-        Icon=#{staged_path}/helium-#{version}-x86_64_linux/helium.png
+        Icon={{staged_path}}/helium-#{version}-x86_64_linux/helium.png
         Terminal=false
         Type=Application
         StartupWMClass=Helium
@@ -41,7 +41,7 @@ cask "helium-linux" do
         [Desktop Action new-empty-window]
         Name=New Empty Window
         Exec=#{HOMEBREW_PREFIX}/bin/helium --new-window %F
-        Icon=#{staged_path}/helium-#{version}-x86_64_linux/helium.png
+        Icon={{staged_path}}/helium-#{version}-x86_64_linux/helium.png
       EOS
     )
   end
