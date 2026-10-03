@@ -20,15 +20,10 @@ jobs:
   update:
     name: Bump casks and fix style
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/homebrew/brew:main
+      options: --user linuxbrew   # brew refuses to run as root
     steps:
-      - name: Install Homebre
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          echo "/home/linuxbrew/.linuxbrew/bin" >> "$GITHUB_PATH"
-
-      # bump-cask-pr edits the cask inside the tap directory and requires it to be a
-      # git repository, so the tap is cloned into place directly. Editing a checkout in
-      # $GITHUB_WORKSPACE would not work: `brew tap` clones its own separate copy.
       - name: Clone the tap with push access
         env:
           GH_TOKEN: ${{ github.token }}
@@ -37,16 +32,13 @@ jobs:
 
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           tap="${owner}/homebrew-tap"
-          echo "TAP=${tap}" >> "$GITHUB_ENV"
-
           dest="$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
+
           mkdir -p "$(dirname "$dest")"
-          git clone "https://github.com/${GITHUB_REPOSITORY}.git" "$dest"
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$dest"
 
           git -C "$dest" config user.name "github-actions[bot]"
           git -C "$dest" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$dest" remote set-url origin \
-            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
           brew trust "$tap"
 
@@ -55,22 +47,27 @@ jobs:
           HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
           set -uo pipefail
-          cd "$(brew --repository)/Library/Taps/${TAP%%/*}/${TAP##*/}"
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
 
           for path in Casks/*.rb; do
+            [ -e "$path" ] || continue
             cask="$(basename "$path" .rb)"
             echo "::group::${cask}"
 
-            json="$(brew livecheck --json "${TAP}/${cask}" 2>/dev/null || true)"
-            version="$(jq -r '.[0].version.latest // empty' <<<"$json")"
-            outdated="$(jq -r '.[0].version.outdated // false' <<<"$json")"
+            json="$(brew livecheck --json "${owner}/homebrew-tap/${cask}" 2>/dev/null || true)"
+            read -r version outdated <<<"$(ruby -rjson -e '
+              a = (JSON.parse(STDIN.read) rescue [])
+              v = a[0] && a[0]["version"]
+              puts "#{v && v["latest"]} #{v && v["outdated"]}"
+            ' <<<"$json")"
 
             if [ -z "$version" ]; then
               echo "No livecheck version (skipped or unsupported); leaving as-is."
             elif [ "$outdated" = "true" ]; then
               echo "Bumping to ${version}"
               brew bump-cask-pr --write-only --no-audit --no-style \
-                "${TAP}/${cask}" --version "$version" \
+                "${owner}/homebrew-tap/${cask}" --version "$version" \
                 || echo "::warning::Failed to bump ${cask}"
             else
               echo "Up to date"
@@ -82,26 +79,29 @@ jobs:
       - name: Fix style
         run: |
           set -uo pipefail
-          cd "$(brew --repository)/Library/Taps/${TAP%%/*}/${TAP##*/}"
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
           brew style --fix . || echo "::warning::brew style reported remaining offenses"
 
       # Gate: never push a bump that left the tap unparseable.
       - name: Verify the tap
         run: |
           set -euo pipefail
-          cd "$(brew --repository)/Library/Taps/${TAP%%/*}/${TAP##*/}"
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
           brew readall --aliases --syntax
 
       - name: Commit and push
         run: |
           set -euo pipefail
-          cd "$(brew --repository)/Library/Taps/${TAP%%/*}/${TAP##*/}"
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
 
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "Nothing to commit."
             exit 0
           fi
 
           git add -A
           git commit -m "chore: auto-update casks and style"
-          git push origin HEAD:main
+          git push origin "HEAD:${GITHUB_REF_NAME}"
