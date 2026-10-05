@@ -4,22 +4,22 @@ cask "ensor" do
 
   on_macos do
     on_arm do
-      sha256 "69acab1f63a1fe7336b09f1359717def35eaa1bf77ffa8cde30441a898135b51"
-      url "https://github.com/Pratyay360/ensor/releases/download/v#{version}/ensor_Darwin_arm64.tar.gz"
+      sha256 "e24721befed21fee781735ad3172304d90efa686eced413d164fdfe7bf528d45"
+      url "https://github.com/Pratyay360/ensor/releases/download/#{version}/ensor_Darwin_arm64.tar.gz"
     end
     on_intel do
-      sha256 "142c61229ec5afffa8c2fab394f9896a7a21dcd2864303dc04dd15dce0c9456f"
-      url "https://github.com/Pratyay360/ensor/releases/download/v#{version}/ensor_Darwin_x86_64.tar.gz"
+      sha256 "351a5c5c4be2ea457fc11fec5fb4de4a7c04f4f91bc0df9f98c3fd271a459845"
+      url "https://github.com/Pratyay360/ensor/releases/download/#{version}/ensor_Darwin_x86_64.tar.gz"
     end
   end
   on_linux do
     on_arm do
-      sha256 "8ff9c37859435a81834a8d3f95c0f86ff73a4c165907a8994caefbc583397f98"
-      url "https://github.com/Pratyay360/ensor/releases/download/v#{version}/ensor_Linux_arm64.tar.gz"
+      sha256 "a9a4a75d3c224fda3cb107821ea5c2c7b7825f22a34383774ebb75d197e4bf92"
+      url "https://github.com/Pratyay360/ensor/releases/download/#{version}/ensor_Linux_arm64.tar.gz"
     end
     on_intel do
-      sha256 "f9abfac3cb35c915a6894d6ad791ea1204f646a03cee7bfd9d8cdb2ef37b4122"
-      url "https://github.com/Pratyay360/ensor/releases/download/v#{version}/ensor_Linux_x86_64.tar.gz"
+      sha256 "191d63f0026459af09a1b1e4e766044e5b7a9cbbe7f74eb038b353d988c8a6ee"
+      url "https://github.com/Pratyay360/ensor/releases/download/#{version}/ensor_Linux_x86_64.tar.gz"
     end
   end
 
