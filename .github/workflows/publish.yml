@@ -2,7 +2,6 @@ name: Update casks
 
 on:
   schedule:
-    # Daily. Off the hour on purpose, to avoid the GitHub Actions scheduling spike.
     - cron: "0 6 * * *"
   workflow_dispatch:
   push:
@@ -26,16 +25,14 @@ jobs:
     steps:
       - name: Clone the tap with push access
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           tap="${owner}/homebrew-tap"
           dest="$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
 
           mkdir -p "$(dirname "$dest")"
-          git clone "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$dest"
+          git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$dest"
 
           git -C "$dest" config user.name "github-actions[bot]"
           git -C "$dest" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -46,7 +43,6 @@ jobs:
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
-          set -uo pipefail
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
 
@@ -78,7 +74,6 @@ jobs:
 
       - name: Fix style
         run: |
-          set -uo pipefail
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
           brew style --fix . || echo "::warning::brew style reported remaining offenses"
@@ -86,14 +81,12 @@ jobs:
       # Gate: never push a bump that left the tap unparseable.
       - name: Verify the tap
         run: |
-          set -euo pipefail
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
           brew readall --aliases --syntax
 
       - name: Commit and push
         run: |
-          set -euo pipefail
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
 
@@ -105,4 +98,3 @@ jobs:
           git add -A
           git commit -m "chore: auto-update casks and style"
           git push origin "HEAD:${GITHUB_REF_NAME}"
-            
