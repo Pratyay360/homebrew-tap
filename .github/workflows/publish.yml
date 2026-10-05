@@ -22,6 +22,9 @@ jobs:
     container:
       image: ghcr.io/homebrew/brew:main
       options: --user linuxbrew   # brew refuses to run as root
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Clone the tap with push access
         env:

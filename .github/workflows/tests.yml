@@ -28,10 +28,12 @@ jobs:
           key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ runner.os }}-rubygems-
 
-      # This tap ships casks only, so --only-tap-syntax is the check that applies.
-      # There are no formulae here, and bottles are formula-only packaging, so there is
-      # no bottle build step and nothing to upload as an artifact.
+      # This tap ships casks only, so tap syntax and audit checks apply.
+      # Exclude token_conflicts from brew audit because cask 'forgit' shares a name with core formula 'forgit'.
       - run: |
           brew test-bot --only-cleanup-before
           brew test-bot --only-setup
-          brew test-bot --only-tap-syntax
+          brew style pratyay360/tap
+          brew readall --aliases --os=all --arch=all pratyay360/tap
+          brew audit --tap=pratyay360/tap --except=installed,token_conflicts
+
