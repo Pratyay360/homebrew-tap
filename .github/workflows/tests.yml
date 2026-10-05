@@ -8,7 +8,9 @@ on:
 jobs:
   test-bot:
     runs-on: ubuntu-latest
-    container: ghcr.io/homebrew/brew:main
+    container:
+      image: ghcr.io/homebrew/brew:main
+      options: --user linuxbrew   # brew refuses to run as root
     permissions:
       actions: write
       checks: read
