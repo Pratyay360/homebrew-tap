@@ -4,22 +4,22 @@ cask "forgit" do
 
   on_macos do
     on_arm do
-      sha256 "094454b5eca8994af17459ec6b8679cc492a9b7a8aca05100c532f519cef48ba"
-      url "https://github.com/pratyay360/forgit/releases/download/v#{version}/forgit_Darwin_arm64.tar.gz"
+      sha256 "16360a405bf09e42500dfe9694a09a74b81c81415a8a9afde9625eab095dd3a1"
+      url "https://github.com/pratyay360/forgit/releases/download/#{version}/forgit_Darwin_arm64.tar.gz"
     end
     on_intel do
-      sha256 "40a6026e2f4ae4b166bcb3c8392ddcea8d9b6e06e9b64efcc4a652247aa4f094"
-      url "https://github.com/pratyay360/forgit/releases/download/v#{version}/forgit_Darwin_x86_64.tar.gz"
+      sha256 "b43cb0e40dc896f2d7fe6e0f9d6a37612376746960986a37774f7736449ee34a"
+      url "https://github.com/pratyay360/forgit/releases/download/#{version}/forgit_Darwin_x86_64.tar.gz"
     end
   end
   on_linux do
     on_arm do
-      sha256 "de1df1e485ec6fd0b4afdc14796b2a922b8ff77c3254f09c71b93619448dace1"
-      url "https://github.com/pratyay360/forgit/releases/download/v#{version}/forgit_Linux_arm64.tar.gz"
+      sha256 "f8f4e60b10a19efab4c14961b244786c47ead6b0b4caf2545d6e8d300801d4ee"
+      url "https://github.com/pratyay360/forgit/releases/download/#{version}/forgit_Linux_arm64.tar.gz"
     end
     on_intel do
-      sha256 "c6dc2613f660812a233eb6fa5130d9ddf908b4622db520771da69e7829a4e4f4"
-      url "https://github.com/pratyay360/forgit/releases/download/v#{version}/forgit_Linux_x86_64.tar.gz"
+      sha256 "8b106bac8570e3902908a5fe118feaa2e3349044806551511e7f4ca8adceab4e"
+      url "https://github.com/pratyay360/forgit/releases/download/#{version}/forgit_Linux_x86_64.tar.gz"
     end
   end
 
