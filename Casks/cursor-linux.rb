@@ -55,8 +55,8 @@ cask "cursor-linux" do
         Name=Cursor
         Comment=AI-first coding environment
         GenericName=Text Editor
-        Exec=#{HOMEBREW_PREFIX}/bin/cursor %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/cursor.png
+        Exec={{HOMEBREW_PREFIX}}/bin/cursor %F
+        Icon=cursor
         Type=Application
         StartupNotify=false
         StartupWMClass=Cursor
@@ -67,14 +67,14 @@ cask "cursor-linux" do
 
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/cursor --new-window %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/cursor.png
+        Exec={{HOMEBREW_PREFIX}}/bin/cursor --new-window %F
+        Icon=cursor
       EOS
     )
 
     unless_path_exists "cursor.png" do
-          touch "cursor.png"
-        end
+      touch "cursor.png"
+    end
   end
 
   zap(

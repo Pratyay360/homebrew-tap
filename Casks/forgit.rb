@@ -24,7 +24,7 @@ cask "forgit" do
   end
 
   name "forgit"
-  desc "A simple git helper"
+  desc "Simple git helper"
   homepage "https://github.com/Pratyay360/forgit"
 
   livecheck do
@@ -32,11 +32,10 @@ cask "forgit" do
   end
 
   binary "forgit"
-
   generate_completions_from_executable "forgit", "completion",
-    base_name: "forgit",
-    shell_parameter_format: :cobra,
-    shells: [:bash, :zsh, :fish]
+                                       base_name:              "forgit",
+                                       shell_parameter_format: :cobra,
+                                       shells:                 [:bash, :zsh, :fish]
 
   # No zap stanza required
 end

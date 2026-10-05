@@ -30,7 +30,7 @@ cask "helium-linux" do
         [Desktop Entry]
         Name=Helium
         Keywords=web,development,code,api,text,editor
-        Exec=#{HOMEBREW_PREFIX}/bin/helium %u
+        Exec={{HOMEBREW_PREFIX}}/bin/helium %u
         Icon={{staged_path}}/helium-#{version}-x86_64_linux/helium.png
         Terminal=false
         Type=Application
@@ -40,7 +40,7 @@ cask "helium-linux" do
 
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/helium --new-window %F
+        Exec={{HOMEBREW_PREFIX}}/bin/helium --new-window %F
         Icon={{staged_path}}/helium-#{version}-x86_64_linux/helium.png
       EOS
     )

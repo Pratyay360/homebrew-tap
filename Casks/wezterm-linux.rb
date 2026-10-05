@@ -39,8 +39,8 @@ cask "wezterm-linux" do
         Name=WezTerm
         Comment=AI-first coding environment
         GenericName=Terminal
-        Exec=#{HOMEBREW_PREFIX}/bin/wezterm %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/org.wezfurlong.wezterm.png
+        Exec={{HOMEBREW_PREFIX}}/bin/wezterm %F
+        Icon=org.wezfurlong.wezterm
         Type=Application
         StartupNotify=false
         StartupWMClass=WezTerm
@@ -50,8 +50,8 @@ cask "wezterm-linux" do
         Keywords=wezterm;code;editor;
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/wezterm --new-window %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/org.wezfurlong.wezterm.png
+        Exec={{HOMEBREW_PREFIX}}/bin/wezterm --new-window %F
+        Icon=org.wezfurlong.wezterm
       EOS
     )
     # Create a placeholder icon if extraction fails

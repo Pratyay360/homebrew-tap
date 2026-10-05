@@ -30,8 +30,8 @@ cask "kiro-linux" do
         [Desktop Entry]
         Name=Kiro
         Keywords=web,development,code,api,text,editor
-        Exec=#{HOMEBREW_PREFIX}/bin/kiro %u
-        Icon=#{Dir.home}/.local/share/icons/kiro.png
+        Exec={{HOMEBREW_PREFIX}}/bin/kiro %u
+        Icon=kiro
         Terminal=false
         Type=Application
         StartupWMClass=Kiro
@@ -40,8 +40,8 @@ cask "kiro-linux" do
 
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/kiro --new-window %F
-        Icon=#{Dir.home}/.local/share/icons/kiro.png
+        Exec={{HOMEBREW_PREFIX}}/bin/kiro --new-window %F
+        Icon=kiro
       EOS
     )
   end

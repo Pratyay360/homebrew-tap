@@ -6,6 +6,7 @@ cask "gram-linux" do
   name "Gram"
   desc "Code editor for humanoid apes and grumpy toads"
   homepage "https://codeberg.org/GramEditor/gram"
+
   livecheck do
     url "https://codeberg.org/api/v1/repos/GramEditor/gram/releases/latest"
     strategy :json do |json|
@@ -27,7 +28,7 @@ cask "gram-linux" do
         [Desktop Entry]
         Name=Gram
         Keywords=web,development,code,api,text,editor
-        Exec=#{HOMEBREW_PREFIX}/bin/gram %u
+        Exec={{HOMEBREW_PREFIX}}/bin/gram %u
         Icon={{staged_path}}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
         Terminal=false
         Type=Application
@@ -37,7 +38,7 @@ cask "gram-linux" do
 
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/gram --new-window %F
+        Exec={{HOMEBREW_PREFIX}}/bin/gram --new-window %F
         Icon={{staged_path}}/gram.app/share/icons/hicolor/scalable/apps/app.liten.Gram.svg
       EOS
     )

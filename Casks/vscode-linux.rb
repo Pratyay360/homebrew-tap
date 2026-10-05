@@ -36,8 +36,8 @@ cask "vscode-linux" do
         Name=Visual Studio Code
         Comment=Code Editing. Redefined.
         GenericName=Text Editor
-        Exec=#{HOMEBREW_PREFIX}/bin/code %F
-        Icon=#{Dir.home}/.local/share/icons/vscode.png
+        Exec={{HOMEBREW_PREFIX}}/bin/code %F
+        Icon=vscode
         Type=Application
         StartupNotify=false
         StartupWMClass=Code
@@ -58,8 +58,8 @@ cask "vscode-linux" do
         Name[ru]=Новое пустое окно
         Name[zh_CN]=新建空窗口
         Name[zh_TW]=開新空視窗
-        Exec=#{HOMEBREW_PREFIX}/bin/code --new-window %F
-        Icon=#{Dir.home}/.local/share/icons/vscode.png
+        Exec={{HOMEBREW_PREFIX}}/bin/code --new-window %F
+        Icon=vscode
       EOS
     )
     write_file(
@@ -69,8 +69,8 @@ cask "vscode-linux" do
         Name=Visual Studio Code - URL Handler
         Comment=Code Editing. Redefined.
         GenericName=Text Editor
-        Exec=#{HOMEBREW_PREFIX}/bin/code --open-url %U
-        Icon=#{Dir.home}/.local/share/icons/vscode.png
+        Exec={{HOMEBREW_PREFIX}}/bin/code --open-url %U
+        Icon=vscode
         Type=Application
         NoDisplay=true
         StartupNotify=true

@@ -36,8 +36,8 @@ cask "better-bird-linux" do
         [Desktop Entry]
         Name=BetterBird
         Keywords=internet,email,mail,web
-        Exec=#{HOMEBREW_PREFIX}/bin/betterbird %u
-        Icon=#{Dir.home}/.local/share/icons/betterbird.png
+        Exec={{HOMEBREW_PREFIX}}/bin/betterbird %u
+        Icon=betterbird
         Terminal=false
         Type=Application
         StartupWMClass=BetterBird

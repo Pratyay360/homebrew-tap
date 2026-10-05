@@ -41,8 +41,8 @@ cask "ghostty-linux" do
         Name=Ghostty
         Comment=AI-first coding environment
         GenericName=Terminal
-        Exec=#{HOMEBREW_PREFIX}/bin/ghostty %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/com.mitchellh.ghostty.png
+        Exec={{HOMEBREW_PREFIX}}/bin/ghostty %F
+        Icon=com.mitchellh.ghostty
         Type=Application
         StartupNotify=false
         StartupWMClass=Ghostty
@@ -51,8 +51,8 @@ cask "ghostty-linux" do
         Keywords=ghostty;code;editor;
         [Desktop Action new-empty-window]
         Name=New Empty Window
-        Exec=#{HOMEBREW_PREFIX}/bin/ghostty --new-window %F
-        Icon=#{Dir.home}/.local/share/icons/hicolor/512x512/apps/com.mitchellh.ghostty.png
+        Exec={{HOMEBREW_PREFIX}}/bin/ghostty --new-window %F
+        Icon=com.mitchellh.ghostty
       EOS
     )
     # Create a placeholder icon if extraction fails
