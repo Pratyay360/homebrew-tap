@@ -32,11 +32,10 @@ cask "ensor" do
   end
 
   binary "ensor"
-
   generate_completions_from_executable "ensor", "completion",
-    base_name: "ensor",
+    base_name:              "ensor",
     shell_parameter_format: :cobra,
-    shells: [:bash, :zsh, :fish]
+    shells:                 [:bash, :zsh, :fish]
 
-  # No zap stanza required
+  zap :not_required
 end

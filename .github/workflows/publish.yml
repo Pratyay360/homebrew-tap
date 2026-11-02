@@ -29,6 +29,7 @@ jobs:
       - name: Clone the tap with push access
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: |
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           tap="${owner}/homebrew-tap"
@@ -45,6 +46,7 @@ jobs:
       - name: Bump outdated casks
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: |
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"
@@ -83,6 +85,8 @@ jobs:
 
       # Gate: never push a bump that left the tap unparseable.
       - name: Verify the tap
+        env:
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: |
           owner="${GITHUB_REPOSITORY_OWNER,,}"
           cd "$(brew --repository)/Library/Taps/${owner}/homebrew-tap"

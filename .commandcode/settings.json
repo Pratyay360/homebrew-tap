@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Shell(git:*)"
+      "Shell(git:*)",
+      "Shell(ls:*)",
+      "Shell(brew:*)",
+      "Shell(ls /var/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/bundle/ruby/4.0.0/bin/ 2>/dev/null; ls /var/home/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/bundle/ruby/4.0.0/gems/ 2>/dev/null | grep -i rubocop | head)",
+      "Shell(Library/Homebrew/vendor/bundle/ruby/4.0.0/bin/rubocop:*)",
+      "Shell(Library/Homebrew/vendor/bundle/ruby/4.0.0/bin/bundle:*)"
     ],
     "deny": [],
     "defaultMode": "default"

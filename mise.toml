@@ -1,0 +1,2 @@
+[tools]
+jactionlint = { version = "latest", workflow = "release.yaml" }
